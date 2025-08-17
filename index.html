@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>WebSocket Demo</title>
+</head>
+<body>
+  <h1>チャットみたいなテスト</h1>
+  <input id="msgInput" placeholder="メッセージを入力">
+  <button onclick="sendMessage()">送信</button>
+  <div id="log"></div>
+
+  <script>
+    // RenderにデプロイしたURLに差し替え
+    const ws = new WebSocket("wss://YOUR-RENDER-APP.onrender.com/ws");
+
+    ws.onmessage = (event) => {
+      const log = document.getElementById("log");
+      log.innerHTML += "<p>" + event.data + "</p>";
+    };
+
+    function sendMessage() {
+      const input = document.getElementById("msgInput");
+      ws.send(input.value);
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
