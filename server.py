@@ -1,11 +1,17 @@
 # server.py
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.responses import HTMLResponse
 import uvicorn
 
 app = FastAPI()
 
 # 接続しているクライアントを管理
 clients = []
+
+@app.get("/")
+async def get():
+    with open("index.html", "r", encoding="utf-8") as f:
+        return HTMLResponse(f.read())
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
