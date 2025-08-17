@@ -22,8 +22,7 @@ async def websocket_endpoint(websocket: WebSocket):
             data = await websocket.receive_text()
             # 受け取ったメッセージを全員に送信（ブロードキャスト）
             for client in clients:
-                if client != websocket:  # 自分以外
-                    await client.send_text(f"他の人: {data}")
+                await client.send_text(f"誰か: {data}")
     except WebSocketDisconnect:
         clients.remove(websocket)
 
